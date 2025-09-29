@@ -21,3 +21,12 @@ class TestUserRegistration:
         assert "refreshToken" in response_data
         assert response_data["user"]["email"] == user_data["email"]
         assert response_data["user"]["name"] == user_data["name"]
+
+    @allure.title("Создание пользователя, который уже зарегистрирован")
+    def test_create_existing_user_fail(self, create_user):
+        existing_user_data = create_user["user_data"]
+        response = ApiClient.register_user(existing_user_data)
+        response_data = response.json()
+        assert response.status_code == 403
+        assert response_data["success"] == False
+        assert response_data["message"] == "User already exists"
