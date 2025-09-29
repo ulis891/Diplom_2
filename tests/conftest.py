@@ -12,3 +12,18 @@ def user_data():
         "password": fake.password(length=8),
         "name": fake.first_name()
     }
+
+
+@pytest.fixture
+def create_user(user_data):
+    response = ApiClient.register_user(user_data)
+    yield {
+        "user_data": user_data,
+        "access_token": response.json().get("accessToken"),
+        "response": response
+    }
+
+    if response.status_code == 200:
+        token = response.json().get("accessToken")
+        if token:
+            ApiClient.delete_user(token)
