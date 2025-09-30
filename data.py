@@ -1,5 +1,4 @@
 class Urls:
-
     BASE_URL = "https://stellarburgers.nomoreparties.site/api"
 
     # Эндпоинты авторизации
@@ -11,9 +10,9 @@ class Urls:
     ORDERS = f"{BASE_URL}/orders"
     INGREDIENTS = f"{BASE_URL}/ingredients"
 
-class Messages:
 
+class Messages:
     INCORRECT_LOGIN = "email or password are incorrect"
-    # INCORRECT_LOGIN = ""
+    INCORRECT_UPDATE_USER = "You should be authorised"
     # INCORRECT_LOGIN = ""
     # INCORRECT_LOGIN = ""
