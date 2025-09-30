@@ -15,3 +15,7 @@ class ApiClient:
     def delete_user(token):
         return requests.delete(Urls.USER, headers={"Authorization": token})
 
+    @staticmethod
+    @allure.step("Авторизация пользователя")
+    def login_user(login_data):
+        return requests.post(Urls.LOGIN, json=login_data)
