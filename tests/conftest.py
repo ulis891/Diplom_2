@@ -32,3 +32,13 @@ def create_user(user_data):
 @pytest.fixture
 def get_ingredients():
     return ApiClient.get_ingredients().json()
+
+
+@pytest.fixture
+def create_user_with_order(create_user, get_ingredients):
+    token = create_user["access_token"]
+    ingredients = get_ingredients["data"]
+    selected_ingredients = ingredients[:2]
+    orde_data = {"ingredients": selected_ingredients}
+    ApiClient.create_order(token, orde_data)
+    return token
