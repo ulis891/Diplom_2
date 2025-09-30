@@ -17,3 +17,8 @@ class Messages:
     INGREDIENTS_FAIL = "Ingredient ids must be provided"
 
     # INCORRECT_LOGIN = ""
+
+
+class OrdersInfo:
+    ORDER_INFO = ["_id", "ingredients", "status", "name", "createdAt", "updatedAt", "number"]
+    USER_INFO = ["success", "orders", "total", "totalToday"]
