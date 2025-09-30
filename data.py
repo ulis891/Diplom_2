@@ -10,3 +10,10 @@ class Urls:
     # Эндпоинты заказов и ингредиентов
     ORDERS = f"{BASE_URL}/orders"
     INGREDIENTS = f"{BASE_URL}/ingredients"
+
+class Messages:
+
+    INCORRECT_LOGIN = "email or password are incorrect"
+    # INCORRECT_LOGIN = ""
+    # INCORRECT_LOGIN = ""
+    # INCORRECT_LOGIN = ""
