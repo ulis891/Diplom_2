@@ -31,4 +31,4 @@ def create_user(user_data):
 
 @pytest.fixture
 def get_ingredients():
-    return ApiClient.get_ingredients()
+    return ApiClient.get_ingredients().json()
