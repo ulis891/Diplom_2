@@ -30,3 +30,15 @@ class TestUserRegistration:
         assert response.status_code == 403
         assert response_data["success"] == False
         assert response_data["message"] == "User already exists"
+
+    @allure.title("Создание пользователя без обязательного поля: {missing_field}")
+    @allure.description("Тест регистрации с отсутствующим обязательным полем")
+    @pytest.mark.parametrize("missing_field", ["email", "password", "name"])
+    def test_create_user_missing_required_field_fail(self, user_data, missing_field):
+        invalid_data = user_data.copy()
+        del invalid_data[missing_field]
+        response = ApiClient.register_user(invalid_data)
+        response_data = response.json()
+        assert response.status_code == 403
+        assert response_data["success"] == False
+        assert "required field" in response_data["message"]
