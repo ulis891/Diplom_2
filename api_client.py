@@ -43,3 +43,9 @@ class ApiClient:
     @allure.step("Создание заказа")
     def create_order(token,order_data):
         return requests.post(Urls.ORDERS, headers={"Authorization": token}, json=order_data)
+
+    @staticmethod
+    @allure.step("Получение списка заказов пользователя")
+    def get_orders(token):
+        return requests.get(Urls.ORDERS, headers=token)
+
