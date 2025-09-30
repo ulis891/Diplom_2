@@ -3,6 +3,7 @@ import allure
 from api_client import ApiClient
 
 
+@allure.epic("Тестирование API для Stellar Burgers")
 @allure.suite("Тесты регистрации пользователя")
 @allure.feature("Регистрация пользователя")
 class TestUserRegistration:

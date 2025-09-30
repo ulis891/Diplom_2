@@ -4,6 +4,7 @@ from api_client import ApiClient
 from data import Messages as msg
 
 
+@allure.epic("Тестирование API для Stellar Burgers")
 @allure.suite("Тесты изменения данных пользователя")
 @allure.feature("Профиль пользователя")
 class TestUserProfile:

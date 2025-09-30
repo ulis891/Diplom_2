@@ -4,6 +4,7 @@ from api_client import ApiClient
 from data import Messages as msg, OrdersInfo as oi
 
 
+@allure.epic("Тестирование API для Stellar Burgers")
 @allure.suite("Тесты работы с заказами")
 @allure.feature("Заказы")
 class TestOrders:
