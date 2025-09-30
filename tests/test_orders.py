@@ -85,3 +85,12 @@ class TestOrders:
             assert field in response_data
         for field in oi.ORDER_INFO:
             assert field in response_data["orders"][0]
+
+    @allure.title("Получение заказов неавторизованного пользователя")
+    @allure.description("Тест получения истории заказов не авторизованного пользователя")
+    def test_get_user_orders_without_auth_fail(self, create_user_with_order):
+        response = ApiClient.get_user_orders(None)
+        response_data = response.json()
+        assert response.status_code == 401
+        assert response_data["success"] == False
+        assert msg.UNAUTHORIZED in response_data["message"]
