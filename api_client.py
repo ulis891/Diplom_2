@@ -19,3 +19,17 @@ class ApiClient:
     @allure.step("Авторизация пользователя")
     def login_user(login_data):
         return requests.post(Urls.LOGIN, json=login_data)
+
+    @staticmethod
+    @allure.step("Получение данных пользователя")
+    def get_user_data(token):
+        return requests.get(Urls.USER, headers={"Authorization": token})
+
+    @staticmethod
+    @allure.step("Изменение данных пользователя")
+    def update_user_data(token, update_data):
+        return requests.patch(
+            Urls.USER,
+            headers={"Authorization": token},
+            json=update_data
+        )
