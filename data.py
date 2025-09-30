@@ -13,6 +13,6 @@ class Urls:
 
 class Messages:
     INCORRECT_LOGIN = "email or password are incorrect"
-    INCORRECT_UPDATE_USER = "You should be authorised"
+    UNAUTHORIZED = "You should be authorised"
     # INCORRECT_LOGIN = ""
     # INCORRECT_LOGIN = ""
