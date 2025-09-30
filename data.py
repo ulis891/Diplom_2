@@ -16,8 +16,6 @@ class Messages:
     UNAUTHORIZED = "You should be authorised"
     INGREDIENTS_FAIL = "Ingredient ids must be provided"
 
-    # INCORRECT_LOGIN = ""
-
 
 class OrdersInfo:
     ORDER_INFO = ["_id", "ingredients", "status", "name", "createdAt", "updatedAt", "number"]
