@@ -1,7 +1,7 @@
 import pytest
 import allure
 from api_client import ApiClient
-from data import Messages as msg
+from data import Messages as msg, OrdersInfo as oi
 
 
 @allure.suite("Тесты работы с заказами")
@@ -46,8 +46,8 @@ class TestOrders:
         }
         selected_count = length_map[ingredient_count_type]
         selected_ingredients = ingredients[:selected_count]
-        payload = {"ingredients": [ing["_id"] for ing in selected_ingredients]}
-        response = ApiClient.create_order(None, payload)
+        order_data = {"ingredients": [ing["_id"] for ing in selected_ingredients]}
+        response = ApiClient.create_order(None, order_data)
         response_data = response.json()
         assert response.status_code == 401
         assert response_data["success"] == False
@@ -71,3 +71,17 @@ class TestOrders:
         order_data = {"ingredients": ["invalid_hash_1", "invalid_hash_2"]}
         response = ApiClient.create_order(token, order_data)
         assert response.status_code == 500
+
+    @allure.title("Получение заказов авторизованного пользователя")
+    @allure.description("Тест получения истории заказов авторизованного пользователя")
+    def test_get_user_orders_with_auth_success(self, create_user_with_order):
+        token = create_user_with_order
+        response = ApiClient.get_user_orders(token)
+        response_data = response.json()
+        assert response.status_code == 200
+        assert response_data["success"] == True
+        assert "orders" in response_data
+        for field in oi.USER_INFO:
+            assert field in response_data
+        for field in oi.ORDER_INFO:
+            assert field in response_data["orders"][0]
