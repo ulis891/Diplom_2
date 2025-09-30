@@ -14,5 +14,6 @@ class Urls:
 class Messages:
     INCORRECT_LOGIN = "email or password are incorrect"
     UNAUTHORIZED = "You should be authorised"
-    # INCORRECT_LOGIN = ""
+    INGREDIENTS_FAIL = "Ingredient ids must be provided"
+
     # INCORRECT_LOGIN = ""

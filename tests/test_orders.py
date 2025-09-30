@@ -23,8 +23,8 @@ class TestOrders:
         }
         selected_count = length_map[ingredient_count_type]
         selected_ingredients = ingredients[:selected_count]
-        payload = {"ingredients": [ing["_id"] for ing in selected_ingredients]}
-        response = ApiClient.create_order(token, payload)
+        order_data = {"ingredients": [ing["_id"] for ing in selected_ingredients]}
+        response = ApiClient.create_order(token, order_data)
         response_data = response.json()
         assert response.status_code == 200
         assert response_data["success"] == True
@@ -53,4 +53,14 @@ class TestOrders:
         assert response_data["success"] == False
         assert msg.UNAUTHORIZED in response_data["message"]
 
+    @allure.title("Создание заказа без ингредиентов")
+    @allure.description("Тест попытки создания заказа без указания ингредиентов")
+    def test_create_order_without_ingredients_fail(self, create_user):
+        token = create_user["access_token"]
+        order_data = {"ingredients": []}
+        response = ApiClient.create_order(token, order_data)
+        response_data = response.json()
+        assert response.status_code == 400
+        assert response_data["success"] == False
+        assert msg.INGREDIENTS_FAIL in response_data["message"]
 
