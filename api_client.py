@@ -46,6 +46,6 @@ class ApiClient:
 
     @staticmethod
     @allure.step("Получение списка заказов пользователя")
-    def get_orders(token):
+    def get_user_orders(token):
         return requests.get(Urls.ORDERS, headers=token)
 
