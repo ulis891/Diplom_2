@@ -38,4 +38,4 @@ class TestUserProfile:
         response_data = response.json()
         assert response.status_code == 401
         assert response_data["success"] == False
-        assert msg.INCORRECT_UPDATE_USER in response_data["message"]
+        assert msg.UNAUTHORIZED in response_data["message"]
