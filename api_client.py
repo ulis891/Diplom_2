@@ -33,3 +33,13 @@ class ApiClient:
             headers={"Authorization": token},
             json=update_data
         )
+
+    @staticmethod
+    @allure.step("Получение списка ингредиентов")
+    def get_ingredients():
+        return requests.get(Urls.INGREDIENTS)
+
+    @staticmethod
+    @allure.step("Создание заказа")
+    def create_order(order_data):
+        return requests.post(Urls.ORDERS, json=order_data)

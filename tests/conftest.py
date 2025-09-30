@@ -27,3 +27,8 @@ def create_user(user_data):
         token = response.json().get("accessToken")
         if token:
             ApiClient.delete_user(token)
+
+
+@pytest.fixture
+def get_ingredients():
+    return ApiClient.get_ingredients()
