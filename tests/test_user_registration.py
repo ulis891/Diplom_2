@@ -11,11 +11,8 @@ class TestUserRegistration:
     @allure.description("Тест успешной регистрации нового пользователя с валидными данными")
     def test_create_unique_user_success(self, user_data):
         response = ApiClient.register_user(user_data)
-
-        assert response.status_code == 200
-
         response_data = response.json()
-        # print(response_data)
+        assert response.status_code == 200
         assert response_data["success"] == True
         assert "accessToken" in response_data
         assert "refreshToken" in response_data
