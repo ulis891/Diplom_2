@@ -35,7 +35,7 @@ class TestOrders:
     @allure.description("Тест создания заказа авторизованным пользователем с ингредиентами")
     @pytest.mark.parametrize("ingredient_count_type", ["min", "mean", "max"])
     @pytest.mark.xfail(reason="По сообщению от наставника, что в этом тесте ошибка")
-    def test_create_order_with_auth_and_ingredients_success(self, create_user, get_ingredients, ingredient_count_type):
+    def test_create_order_with_auth_and_ingredients_success(self, get_ingredients, ingredient_count_type):
         ingredients = get_ingredients["data"]
         '''В зависимости от параметра ingredient_count_type выбираем количество ингредиентов для заказа'''
         len_ingredients = len(ingredients)
@@ -64,3 +64,10 @@ class TestOrders:
         assert response_data["success"] == False
         assert msg.INGREDIENTS_FAIL in response_data["message"]
 
+    @allure.title("Создание заказа с неверным хешем ингредиентов")
+    @allure.description("Тест создания заказа с некорректными хешами ингредиентов")
+    def test_create_order_with_invalid_ingredient_hash_fail(self, create_user):
+        token = create_user["access_token"]
+        order_data = {"ingredients": ["invalid_hash_1", "invalid_hash_2"]}
+        response = ApiClient.create_order(token, order_data)
+        assert response.status_code == 500
