@@ -24,3 +24,20 @@ class TestUserLogin:
         assert response_data["user"]["email"] == user_data["email"]
         assert response_data["user"]["name"] == user_data["name"]
 
+    @allure.title("Логин c несуществующим пользователем")
+    @allure.description("Тест неуспешной авторизации с несуществующими учетными данными")
+    @pytest.mark.parametrize("missing_field", ["email", "password"])
+    def test_login_user_missing_required_field_fail(self, create_user, missing_field):
+        user_data = create_user["user_data"]
+        login_data = {
+            "email": user_data["email"],
+            "password": user_data["password"]
+        }
+        login_data[missing_field] += "invalid"
+        response = ApiClient.login_user(login_data)
+        response_data = response.json()
+        assert response.status_code == 401
+        assert response_data["success"] == False
+        assert "email or password are incorrect" in response_data["message"]
+
+
