@@ -1,6 +1,7 @@
 import pytest
 import allure
 from api_client import ApiClient
+from data import Messages as msg
 
 
 @allure.suite("Тесты авторизации пользователя")
@@ -38,6 +39,6 @@ class TestUserLogin:
         response_data = response.json()
         assert response.status_code == 401
         assert response_data["success"] == False
-        assert "email or password are incorrect" in response_data["message"]
+        assert msg.INCORRECT_LOGIN in response_data["message"]
 
 
