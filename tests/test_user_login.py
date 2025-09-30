@@ -40,5 +40,3 @@ class TestUserLogin:
         assert response.status_code == 401
         assert response_data["success"] == False
         assert msg.INCORRECT_LOGIN in response_data["message"]
-
-
