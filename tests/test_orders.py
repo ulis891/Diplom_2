@@ -2,6 +2,7 @@ import pytest
 import allure
 from api_client import ApiClient
 from data import Messages as msg, OrdersInfo as oi
+from helper import *
 
 
 @allure.epic("Тестирование API для Stellar Burgers")
@@ -15,14 +16,7 @@ class TestOrders:
     def test_create_order_with_auth_and_ingredients_success(self, create_user, get_ingredients, ingredient_count_type):
         token = create_user["access_token"]
         ingredients = get_ingredients["data"]
-        '''В зависимости от параметра ingredient_count_type выбираем количество ингредиентов для заказа'''
-        len_ingredients = len(ingredients)
-        length_map = {
-            "min": 1,
-            "mean": len_ingredients // 2,
-            "max": len_ingredients,
-        }
-        selected_count = length_map[ingredient_count_type]
+        selected_count = get_ingredient_count(ingredients, ingredient_count_type)
         selected_ingredients = ingredients[:selected_count]
         order_data = {"ingredients": [ing["_id"] for ing in selected_ingredients]}
         response = ApiClient.create_order(token, order_data)
@@ -35,17 +29,10 @@ class TestOrders:
     @allure.title("Создание заказа")
     @allure.description("Тест создания заказа авторизованным пользователем с ингредиентами")
     @pytest.mark.parametrize("ingredient_count_type", ["min", "mean", "max"])
-    @pytest.mark.xfail(reason="По сообщению от наставника, что в этом тесте ошибка")
-    def test_create_order_with_auth_and_ingredients_success(self, get_ingredients, ingredient_count_type):
+    @pytest.mark.xfail(reason="По сообщению от наставника, что в этом месте ошибка в API")
+    def test_create_order_without_auth_and_ingredients_fail(self, get_ingredients, ingredient_count_type):
         ingredients = get_ingredients["data"]
-        '''В зависимости от параметра ingredient_count_type выбираем количество ингредиентов для заказа'''
-        len_ingredients = len(ingredients)
-        length_map = {
-            "min": 1,
-            "mean": len_ingredients // 2,
-            "max": len_ingredients,
-        }
-        selected_count = length_map[ingredient_count_type]
+        selected_count = get_ingredient_count(ingredients, ingredient_count_type)
         selected_ingredients = ingredients[:selected_count]
         order_data = {"ingredients": [ing["_id"] for ing in selected_ingredients]}
         response = ApiClient.create_order(None, order_data)
