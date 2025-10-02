@@ -11,15 +11,11 @@ class TestUserProfile:
 
     @allure.title("Изменение данных пользователя с авторизацией")
     @allure.description("Тест изменения любого поля профиля авторизованным пользователем")
-    # @pytest.mark.parametrize("field,new_value", [
-    #     ("name", "New Test Name"),
-    #     ("email", "newemail@example.com")
-    # ])
     @pytest.mark.parametrize("field", ["email", "name"])
     def test_update_user_data_with_auth_success(self, create_user, field):
         token = create_user["access_token"]
         user_data = create_user["user_data"]
-        new_value = "new" + user_data[field]
+        new_value = "new_" + user_data[field]
         update_data = {field: new_value}
         response = ApiClient.update_user_data(token, update_data)
         response_data = response.json()

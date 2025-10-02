@@ -35,7 +35,7 @@ class TestUserLogin:
             "email": user_data["email"],
             "password": user_data["password"]
         }
-        login_data[missing_field] += "invalid"
+        login_data[missing_field] += "_invalid"
         response = ApiClient.login_user(login_data)
         response_data = response.json()
         assert response.status_code == 401
