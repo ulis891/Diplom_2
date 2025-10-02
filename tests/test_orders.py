@@ -27,7 +27,7 @@ class TestOrders:
         assert "number" in response_data["order"]
 
     @allure.title("Создание заказа")
-    @allure.description("Тест создания заказа авторизованным пользователем с ингредиентами")
+    @allure.description("Тест создания заказа не авторизованным пользователем с ингредиентами")
     @pytest.mark.parametrize("ingredient_count_type", ["min", "mean", "max"])
     @pytest.mark.xfail(reason="По сообщению от наставника, что в этом месте ошибка в API")
     def test_create_order_without_auth_and_ingredients_fail(self, get_ingredients, ingredient_count_type):
