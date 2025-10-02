@@ -19,6 +19,7 @@ def create_user(user_data):
     response = ApiClient.register_user(user_data)
     '''
     Иногда, Faker возвращает email, который уже зарегистрирован в системе.
+    Для этого, мы проверяем статус ответа и если он 403, то меняем email на новый.
     '''
     while response.status_code != 200:
         if response.status_code == 403:
