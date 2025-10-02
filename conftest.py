@@ -17,16 +17,21 @@ def user_data():
 @pytest.fixture
 def create_user(user_data):
     response = ApiClient.register_user(user_data)
+    '''
+    Иногда, Faker возвращает email, который уже зарегистрирован в системе.
+    '''
+    while response.status_code != 200:
+        if response.status_code == 403:
+            user_data["email"] = fake.email()
+            response = ApiClient.register_user(user_data)
     yield {
         "user_data": user_data,
         "access_token": response.json().get("accessToken"),
         "response": response
     }
-
     if response.status_code == 200:
         token = response.json().get("accessToken")
-        if token:
-            ApiClient.delete_user(token)
+        ApiClient.delete_user(token)
 
 
 @pytest.fixture
